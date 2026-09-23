@@ -101,6 +101,18 @@ try {
     if (!$facultyStmt->execute()) {
         throw new Exception("Execute failed: ".$facultyStmt->error);
     }
+    $facultyStmt->close();
+
+    // Initialize personal info record
+    $gender = !empty($data['gender']) ? $data['gender'] : null;
+    $pInfoSql = "INSERT INTO faculty_personal_info (faculty_id, gender) VALUES (?, ?) 
+                 ON DUPLICATE KEY UPDATE gender = COALESCE(VALUES(gender), gender)";
+    $pInfoStmt = $conn->prepare($pInfoSql);
+    if ($pInfoStmt) {
+        $pInfoStmt->bind_param("ss", $data['faculty_id'], $gender);
+        $pInfoStmt->execute();
+        $pInfoStmt->close();
+    }
 
     $conn->commit();
     

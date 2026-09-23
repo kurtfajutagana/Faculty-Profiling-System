@@ -195,20 +195,20 @@ $users = $stmt->get_result();
                         $statusClass = $user['faculty_status'] === 'Active' ? 'status-active' : 'status-inactive';
                         ?>
                           <tr>
-                              <td><?= htmlspecialchars($user['faculty_id']) ?></td>
-                              <td><?= htmlspecialchars($user['full_name']) ?></td>
-                              <td><?= htmlspecialchars($user['email']) ?></td>
-                              <td><?= htmlspecialchars($user['username']) ?></td>
+                              <td><?= htmlspecialchars($user['faculty_id'] ?? '') ?></td>
+                              <td><?= htmlspecialchars($user['full_name'] ?? '') ?></td>
+                              <td><?= htmlspecialchars($user['email'] ?? '') ?></td>
+                              <td><?= htmlspecialchars($user['username'] ?? '') ?></td>
                               <td>
-                                  <span class="status-badge <?= $user['faculty_status'] === 'Active' ? 'status-active' : 'status-inactive' ?>">
-                                      <?= htmlspecialchars($user['faculty_status']) ?>
+                                  <span class="status-badge <?= ($user['faculty_status'] ?? '') === 'Active' ? 'status-active' : 'status-inactive' ?>">
+                                      <?= htmlspecialchars($user['faculty_status'] ?? 'N/A') ?>
                                   </span>
                               </td>
                               <td> 
-                                  <?php if ($user['faculty_status'] === 'Active'): ?>
+                                  <?php if (($user['faculty_status'] ?? '') === 'Active'): ?>
                                       <button class="action-btn edit-btn" onclick="openEditModal(
-                                          '<?= htmlspecialchars($user['faculty_id']) ?>',
-                                          '<?= htmlspecialchars($user['username']) ?>'
+                                          '<?= htmlspecialchars($user['faculty_id'] ?? '') ?>',
+                                          '<?= htmlspecialchars($user['username'] ?? '') ?>'
                                       )">
                                           <i class="fas fa-pen"></i> Edit
                                       </button>

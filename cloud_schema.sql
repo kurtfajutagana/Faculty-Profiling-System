@@ -245,6 +245,52 @@ INSERT INTO `faculty` (`faculty_id`, `college_id`, `full_name`, `email`, `employ
 ON DUPLICATE KEY UPDATE `full_name` = VALUES(`full_name`);
 
 -- --------------------------------------------------------
+-- SEED DATA: Faculty Personal Info (Demographics & Gender)
+-- --------------------------------------------------------
+INSERT INTO `faculty_personal_info` (`faculty_id`, `birthdate`, `birthplace`, `gender`, `civil_status`, `address`, `height_cm`, `weight_kg`, `blood_type`, `citizenship`) VALUES
+-- College 1: CAS
+('23-00001', '1985-03-15', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 170.00, 70.00, 'O+', 'Filipino'),
+('23-00002', '1988-07-22', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 165.00, 45.00, 'A+', 'Filipino'),
+('23-00003', '1982-11-10', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 169.00, 55.00, 'B+', 'Filipino'),
+('23-00004', '1990-01-25', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 154.00, 51.00, 'AB+', 'Filipino'),
+('23-00005', '1980-05-18', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 156.00, 49.00, 'O+', 'Filipino'),
+('23-00006', '1992-09-14', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 160.00, 50.00, 'A+', 'Filipino'),
+('23-00007', '1987-04-30', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 165.00, 60.00, 'O+', 'Filipino'),
+('23-00008', '1991-12-05', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 160.00, 55.00, 'B+', 'Filipino'),
+('23-00009', '1984-08-19', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 170.00, 65.00, 'A+', 'Filipino'),
+('23-00010', '1993-02-28', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 158.00, 52.00, 'O+', 'Filipino'),
+-- College 2: CBA
+('23-10001', '1981-06-12', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 172.00, 72.00, 'O+', 'Filipino'),
+('23-10002', '1989-10-08', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 162.00, 52.00, 'A+', 'Filipino'),
+('23-10003', '1983-04-17', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 168.00, 68.00, 'B+', 'Filipino'),
+('23-10004', '1986-12-23', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 158.00, 54.00, 'AB+', 'Filipino'),
+-- College 3: CCS
+('23-20000', '1985-09-15', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 170.00, 70.00, 'O+', 'Filipino'),
+('23-20007', '1988-11-20', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 165.00, 55.00, 'A+', 'Filipino'),
+('23-20008', '1990-03-14', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 164.00, 54.00, 'B+', 'Filipino'),
+('23-20009', '1992-08-27', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 164.00, 54.00, 'O+', 'Filipino'),
+('23-20010', '1987-05-09', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 160.00, 52.00, 'A+', 'Filipino'),
+-- College 4: COED
+('23-40001', '1979-02-14', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 158.00, 56.00, 'O+', 'Filipino'),
+('23-40002', '1988-07-31', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 160.00, 53.00, 'A+', 'Filipino'),
+('23-40003', '1984-11-03', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 170.00, 68.00, 'B+', 'Filipino'),
+('23-40004', '1991-04-16', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 174.00, 70.00, 'O+', 'Filipino'),
+-- College 5: COE
+('23-30000', '1980-08-21', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 164.00, 54.00, 'O+', 'Filipino'),
+('23-30001', '1983-01-19', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 167.00, 56.00, 'A+', 'Filipino'),
+('23-30002', '1989-09-04', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 157.00, 58.00, 'B+', 'Filipino'),
+('23-30003', '1982-12-11', 'Pasig City', 'Male', 'Married', 'Pasig City, Metro Manila', 162.00, 52.00, 'AB+', 'Filipino'),
+-- College 6: CHM
+('23-60001', '1981-03-29', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 159.00, 53.00, 'O+', 'Filipino'),
+('23-60002', '1987-10-15', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 173.00, 71.00, 'A+', 'Filipino'),
+('23-60003', '1993-06-02', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 161.00, 50.00, 'B+', 'Filipino'),
+-- College 7: CON
+('23-70001', '1984-05-17', 'Pasig City', 'Female', 'Married', 'Pasig City, Metro Manila', 163.00, 55.00, 'O+', 'Filipino'),
+('23-70002', '1988-09-22', 'Pasig City', 'Male', 'Single', 'Pasig City, Metro Manila', 172.00, 69.00, 'A+', 'Filipino'),
+('23-70003', '1994-01-18', 'Pasig City', 'Female', 'Single', 'Pasig City, Metro Manila', 158.00, 48.00, 'B+', 'Filipino')
+ON DUPLICATE KEY UPDATE `gender` = VALUES(`gender`), `civil_status` = VALUES(`civil_status`);
+
+-- --------------------------------------------------------
 -- SEED DATA: User Accounts (Password: Password123 or default admin credentials)
 -- --------------------------------------------------------
 INSERT INTO `users` (`user_id`, `college_id`, `faculty_id`, `username`, `password_hash`, `role`, `login_attempts`, `created_at`) VALUES

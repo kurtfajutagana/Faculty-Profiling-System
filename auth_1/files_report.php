@@ -145,15 +145,15 @@ $credentials_result = $stmt->get_result();
         <tbody>
           <?php while ($row = $credentials_result->fetch_assoc()): ?>
             <tr>
-              <td><?= htmlspecialchars($row['faculty_id']) ?></td>
-              <td><?= htmlspecialchars($row['full_name']) ?></td>
-              <td><?= htmlspecialchars($row['credential_type']) ?></td>
-              <td><?= htmlspecialchars($row['credential_name']) ?></td>
+              <td><?= htmlspecialchars($row['faculty_id'] ?? '') ?></td>
+              <td><?= htmlspecialchars($row['full_name'] ?? '') ?></td>
+              <td><?= htmlspecialchars($row['credential_type'] ?? '') ?></td>
+              <td><?= htmlspecialchars($row['credential_name'] ?? '') ?></td>
               <td><?= htmlspecialchars($row['semester'] ?? 'N/A') ?></td>
               <td><?= htmlspecialchars($row['school_year'] ?? 'N/A') ?></td>
               <td><?= htmlspecialchars($row['total_loads'] ?? 'N/A') ?></td>
               <td>
-                <button onclick="viewCredentialFile('<?= htmlspecialchars($row['file_path']) ?>')" class="view-file">
+                <button onclick="viewCredentialFile('<?= htmlspecialchars($row['file_path'] ?? '') ?>')" class="view-file">
                   <i class="fas fa-file-alt"></i> VIEW FILE
                 </button>
                               </td>

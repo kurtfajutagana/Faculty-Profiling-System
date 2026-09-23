@@ -160,23 +160,23 @@ $current_college_name = $college_row['college_name'];
 
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
-                                        $statusClass = $row['status'] === 'Active' ? 'status-active' : 'status-inactive';
+                                        $statusClass = ($row['status'] ?? 'Active') === 'Active' ? 'status-active' : 'status-inactive';
                                         echo '<tr>';
-                                        echo '<td>' . htmlspecialchars($row['faculty_id']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['full_name']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['gender']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['email']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['employment_type']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['specialization']) . '</td>';
-                                        echo '<td>' . htmlspecialchars($row['contact_number']) . '</td>';
-                                        echo '<td><span class="status-badge ' . $statusClass . '">' . htmlspecialchars($row['status']) . '</span></td>';
+                                        echo '<td>' . htmlspecialchars($row['faculty_id'] ?? '') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['full_name'] ?? '') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['gender'] ?? 'N/A') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['email'] ?? '') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['employment_type'] ?? 'N/A') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['specialization'] ?? 'N/A') . '</td>';
+                                        echo '<td>' . htmlspecialchars($row['contact_number'] ?? 'N/A') . '</td>';
+                                        echo '<td><span class="status-badge ' . $statusClass . '">' . htmlspecialchars($row['status'] ?? 'Active') . '</span></td>';
                                         echo '<td class="actions">';
-                                        if ($row['status'] === 'Active') {
-                                            echo '<button class="action-btn deactivate-btn" onclick="changeStatus(\'' . $row['faculty_id'] . '\', \'Inactive\')">
+                                        if (($row['status'] ?? 'Active') === 'Active') {
+                                            echo '<button class="action-btn deactivate-btn" onclick="changeStatus(\'' . htmlspecialchars($row['faculty_id'] ?? '') . '\', \'Inactive\')">
                                                 <i class="fas fa-times-circle"></i> Deactivate
                                                 </button>';
                                         } else {
-                                            echo '<button class="action-btn activate-btn" onclick="changeStatus(\'' . $row['faculty_id'] . '\', \'Active\')">
+                                            echo '<button class="action-btn activate-btn" onclick="changeStatus(\'' . htmlspecialchars($row['faculty_id'] ?? '') . '\', \'Active\')">
                                                 <i class="fas fa-check-circle"></i> Activate
                                                 </button>';
                                         }

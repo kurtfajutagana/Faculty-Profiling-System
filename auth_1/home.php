@@ -76,17 +76,17 @@ if ($college_id) {
     $stats['total_faculty'] = $row[0];
 
     // Gender counts
-    $stmt = $conn->prepare("SELECT p.gender, COUNT(*) 
+    $stmt = $conn->prepare("SELECT p.gender, COUNT(*) as cnt
                        FROM faculty f 
-                       JOIN faculty_personal_info p ON f.faculty_id = p.faculty_id 
+                       LEFT JOIN faculty_personal_info p ON f.faculty_id = p.faculty_id 
                        WHERE f.college_id = ? 
                        GROUP BY p.gender");
     $stmt->bind_param("i", $college_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
-        if ($row['gender'] === 'Female') $stats['total_female'] = $row['COUNT(*)'];
-        if ($row['gender'] === 'Male') $stats['total_male'] = $row['COUNT(*)'];
+        if (($row['gender'] ?? '') === 'Female') $stats['total_female'] = (int)$row['cnt'];
+        if (($row['gender'] ?? '') === 'Male') $stats['total_male'] = (int)$row['cnt'];
     }
 
     // Employment type
