@@ -1,3 +1,8 @@
+<?php
+session_start();
+$recaptcha_site_key = getenv('RECAPTCHA_SITE_KEY') ?: '6Lc2ZUArAAAAAIvfTsk94VYy9hG5e9Yb1Ge7Dln3';
+$recaptcha_enabled = (getenv('RECAPTCHA_ENABLED') !== 'false' && !empty($recaptcha_site_key) && $recaptcha_site_key !== 'none');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +11,9 @@
   <title>PLP Faculty Login</title>
   <link rel="stylesheet" href="../css/login.css?v=<?php echo time(); ?>" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <?php if ($recaptcha_enabled): ?>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <?php endif; ?>
 </head>
 <body>
   <div class="container">
@@ -36,8 +43,10 @@
         
         <a href="../forgot_password/forgotpassword.php" class="forgot-password">Forgot password?</a>
         
-        <!-- Add reCAPTCHA widget -->
-        <div class="g-recaptcha" data-sitekey="6Lc2ZUArAAAAAIvfTsk94VYy9hG5e9Yb1Ge7Dln3"></div>
+        <?php if ($recaptcha_enabled): ?>
+          <!-- reCAPTCHA widget -->
+          <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars($recaptcha_site_key); ?>"></div>
+        <?php endif; ?>
         
         <button type="submit" class="login-button">LOG IN</button>
         <a href="../landing/index.php" class="cancel-button" onclick="return confirm('Are you sure you want to cancel?')">CANCEL</a>
@@ -55,11 +64,22 @@
       this.classList.toggle('fa-eye-slash');
     });
 
-    // Optional: Form validation before submitting
+    // Form validation before submitting
     document.getElementById('loginForm').addEventListener('submit', function(e) {
-      if(grecaptcha.getResponse().length === 0) {
-        e.preventDefault();
-        alert("Please complete the reCAPTCHA verification");
+      const recaptchaWidget = document.querySelector('.g-recaptcha');
+      if (recaptchaWidget && typeof grecaptcha !== 'undefined' && typeof grecaptcha.getResponse === 'function') {
+        try {
+          if (grecaptcha.getResponse().length === 0) {
+            // Check if widget was rendered with error
+            const iframe = recaptchaWidget.querySelector('iframe');
+            if (iframe && !iframe.title.includes('error')) {
+              e.preventDefault();
+              alert("Please complete the reCAPTCHA verification");
+            }
+          }
+        } catch(err) {
+          // If recaptcha failed to load due to domain error, don't block user
+        }
       }
     });
   </script>

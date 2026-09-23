@@ -12,16 +12,18 @@
             <div class="title">PAMANTASAN NG LUNGSOD NG PASIG</div>
         </div>
         <div class="nav">
-            <a href="index.php">Home</a>
-            <!--<div class="dropdown">
-                <a>Departments</a>
+            <div class="dropdown">
+                <a href="javascript:void(0)" style="cursor: pointer;">Colleges & Departments ▾</a>
                 <div class="dropdown-content">
-                    <a href="coe.php">College of Engineering</a>
-                    <a href="coed.php">College of Education</a>
-                    <a href="cas.php">College of Arts and Sciences</a>
-                    <a href="ccs.php">College of Computer Studies</a>
+                    <a href="javascript:void(0)">College of Arts and Science</a>
+                    <a href="javascript:void(0)">College of Business and Accountancy</a>
+                    <a href="javascript:void(0)">College of Computer Studies</a>
+                    <a href="javascript:void(0)">College of Education</a>
+                    <a href="javascript:void(0)">College of Engineering</a>
+                    <a href="javascript:void(0)">College of Hospitality Management</a>
+                    <a href="javascript:void(0)">College of Nursing</a>
                 </div>
-            </div>-->
+            </div>
             <a href="../login/index.php">Log In</a>
         </div>
     </div>
