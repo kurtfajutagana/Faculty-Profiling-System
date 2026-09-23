@@ -20,6 +20,7 @@ if (isset($_SESSION['error'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Forgot Password - PLP</title>
+  <link rel="icon" type="image/png" href="../images/logo.png">
   <link rel="stylesheet" href="../css/styleFP.css" />
   <style>
     .message { color: green; margin-bottom: 15px; text-align: center; font-weight: bold; }

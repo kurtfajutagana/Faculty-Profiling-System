@@ -9,6 +9,7 @@ $recaptcha_enabled = (getenv('RECAPTCHA_ENABLED') !== 'false' && !empty($recaptc
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PLP Faculty Login</title>
+  <link rel="icon" type="image/png" href="../images/logo.png">
   <link rel="stylesheet" href="../css/login.css?v=<?php echo time(); ?>" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <?php if ($recaptcha_enabled): ?>
