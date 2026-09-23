@@ -22,7 +22,7 @@ if ($checkDb) {
     $dbPort = (int)(getenv('DB_PORT') ?: (getenv('MYSQLPORT') ?: 3306));
     $dbUser = getenv('DB_USER') ?: (getenv('MYSQLUSER') ?: 'root');
     $dbPass = getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: (getenv('MYSQLPASSWORD') ?: ''));
-    $dbName = getenv('DB_NAME') ?: (getenv('MYSQLDATABASE') ?: 'finalproj');
+    $dbName = getenv('DB_NAME') ?: (getenv('MYSQLDATABASE') ?: 'test');
 
     // Check for DATABASE_URL format
     $dbUrl = getenv('DATABASE_URL') ?: getenv('MYSQL_URL');
@@ -35,16 +35,31 @@ if ($checkDb) {
         $dbName = isset($parts['path']) ? ltrim($parts['path'], '/') : $dbName;
     }
 
+    $isRemote = ($dbHost !== 'localhost' && $dbHost !== '127.0.0.1');
+
     $conn = mysqli_init();
     if ($conn) {
         $conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 3);
-        $connected = @$conn->real_connect($dbHost, $dbUser, $dbPass, $dbName, $dbPort);
-        if ($connected && !$conn->connect_error) {
-            $dbStatus = 'connected';
-            $conn->close();
-        } else {
+        $flags = 0;
+        if ($isRemote) {
+            $caBundle = file_exists('/etc/ssl/certs/ca-certificates.crt') ? '/etc/ssl/certs/ca-certificates.crt' : NULL;
+            $conn->ssl_set(NULL, NULL, $caBundle, NULL, NULL);
+            $flags = MYSQLI_CLIENT_SSL;
+        }
+
+        mysqli_report(MYSQLI_REPORT_OFF);
+        try {
+            $connected = @$conn->real_connect($dbHost, $dbUser, $dbPass, $dbName, $dbPort, NULL, $flags);
+            if ($connected && !$conn->connect_error) {
+                $dbStatus = 'connected';
+                $conn->close();
+            } else {
+                $dbStatus = 'disconnected';
+                $dbMessage = $conn->connect_error ?: 'Connection failed';
+            }
+        } catch (Throwable $e) {
             $dbStatus = 'disconnected';
-            $dbMessage = 'Unable to connect to database host';
+            $dbMessage = $e->getMessage();
         }
     }
 }
@@ -58,8 +73,8 @@ echo json_encode([
     'timestamp' => date('c'),
     'uptime_monitor' => 'ready',
     'database' => $dbStatus,
+    'db_message' => $dbMessage ?: null,
     'response_time_ms' => $responseTimeMs
 ], JSON_PRETTY_PRINT);
 exit();
 ?>
-

@@ -23,14 +23,14 @@ if (!empty($databaseUrl)) {
     $port       = isset($dbParts['port']) ? (int)$dbParts['port'] : 3306;
     $username   = $dbParts['user'] ?? 'root';
     $password   = $dbParts['pass'] ?? '';
-    $dbname     = isset($dbParts['path']) ? ltrim($dbParts['path'], '/') : 'finalproj';
+    $dbname     = isset($dbParts['path']) ? ltrim($dbParts['path'], '/') : 'test';
 } else {
     // 2. Read discrete environment variables with local defaults
     $servername = getDbEnv('DB_HOST', getDbEnv('MYSQLHOST', 'localhost'));
     $port       = (int)getDbEnv('DB_PORT', getDbEnv('MYSQLPORT', 3306));
     $username   = getDbEnv('DB_USER', getDbEnv('MYSQLUSER', 'root'));
     $password   = getDbEnv('DB_PASSWORD', getDbEnv('DB_PASS', getDbEnv('MYSQLPASSWORD', '')));
-    $dbname     = getDbEnv('DB_NAME', getDbEnv('MYSQLDATABASE', 'finalproj'));
+    $dbname     = getDbEnv('DB_NAME', getDbEnv('MYSQLDATABASE', 'test'));
 }
 
 $sslCa = getDbEnv('DB_SSL_CA', getDbEnv('MYSQL_SSL_CA', ''));
@@ -46,16 +46,46 @@ if (!$conn) {
 // Set connection timeout (5 seconds)
 $conn->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
 
-// Configure SSL if specified or connecting to TiDB Cloud / cloud hosts
+// Detect if connecting to remote/cloud host (TiDB Cloud, Aiven, etc.)
+$isRemoteHost = ($servername !== 'localhost' && $servername !== '127.0.0.1');
+
+// Locate system CA bundle if available
+$caBundle = NULL;
 if (!empty($sslCa) && file_exists($sslCa)) {
-    $conn->ssl_set(NULL, NULL, $sslCa, NULL, NULL);
+    $caBundle = $sslCa;
+} elseif (file_exists('/etc/ssl/certs/ca-certificates.crt')) {
+    $caBundle = '/etc/ssl/certs/ca-certificates.crt';
+} elseif (file_exists('/etc/pki/tls/certs/ca-bundle.crt')) {
+    $caBundle = '/etc/pki/tls/certs/ca-bundle.crt';
 }
 
-// Establish connection
-$connected = @$conn->real_connect($servername, $username, $password, $dbname, $port, NULL, !empty($sslCa) ? MYSQLI_CLIENT_SSL : 0);
+$flags = 0;
+if ($isRemoteHost || !empty($sslCa)) {
+    if (!empty($caBundle)) {
+        $conn->ssl_set(NULL, NULL, $caBundle, NULL, NULL);
+    } else {
+        $conn->ssl_set(NULL, NULL, NULL, NULL, NULL);
+    }
+    $flags = MYSQLI_CLIENT_SSL;
+}
 
-if (!$connected || $conn->connect_error) {
-    $errorMsg = $conn->connect_error ?: mysqli_connect_error();
+// Disable default PHP 8.1 exception throwing during connection attempt
+mysqli_report(MYSQLI_REPORT_OFF);
+
+$connected = false;
+$errorMsg = '';
+
+try {
+    $connected = @$conn->real_connect($servername, $username, $password, $dbname, $port, NULL, $flags);
+    if (!$connected) {
+        $errorMsg = $conn->connect_error ?: mysqli_connect_error();
+    }
+} catch (Throwable $e) {
+    $connected = false;
+    $errorMsg = $e->getMessage();
+}
+
+if (!$connected) {
     error_log("Database connection error: " . $errorMsg);
     
     // If request expects JSON (API endpoints), respond with JSON
@@ -76,7 +106,7 @@ if (!$connected || $conn->connect_error) {
     
     // Otherwise show friendly error page
     http_response_code(500);
-    die("<h3>Database Connection Error</h3><p>Unable to connect to the database. Please verify your database configuration.</p>");
+    die("<h3>Database Connection Error</h3><p>Unable to connect to the database: " . htmlspecialchars($errorMsg) . "</p>");
 }
 
 // Set UTF-8 charset
