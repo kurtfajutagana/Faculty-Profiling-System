@@ -1,3 +1,19 @@
+<?php
+session_start();
+
+$session_message = '';
+$session_error = '';
+
+if (isset($_SESSION['message'])) {
+    $session_message = $_SESSION['message'];
+    unset($_SESSION['message']);
+}
+
+if (isset($_SESSION['error'])) {
+    $session_error = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +22,8 @@
   <title>Forgot Password - PLP</title>
   <link rel="stylesheet" href="../css/styleFP.css" />
   <style>
-    .message { color: green; margin-bottom: 15px; text-align: center; }
-    .error { color: red; margin-bottom: 15px; text-align: center; }
+    .message { color: green; margin-bottom: 15px; text-align: center; font-weight: bold; }
+    .error { color: red; margin-bottom: 15px; text-align: center; font-weight: bold; }
     .success-message { 
       display: none;
       background-color: #d4edda;
@@ -32,19 +48,12 @@
       </div>
       <div class="form-box">
         <h1>Forgot your password</h1>
-        <?php
-        session_start();
-        
-        if (isset($_SESSION['message'])) {
-            echo '<p class="message">' . $_SESSION['message'] . '</p>';
-            unset($_SESSION['message']);
-        }
-        
-        if (isset($_SESSION['error'])) {
-            echo '<p class="error">' . $_SESSION['error'] . '</p>';
-            unset($_SESSION['error']);
-        }
-        ?>
+        <?php if (!empty($session_message)): ?>
+            <p class="message"><?= htmlspecialchars($session_message) ?></p>
+        <?php endif; ?>
+        <?php if (!empty($session_error)): ?>
+            <p class="error"><?= htmlspecialchars($session_error) ?></p>
+        <?php endif; ?>
         <div id="successMessage" class="success-message"></div>
         <p>Please enter the email address you'd like your password reset information sent to</p>
         <form id="forgotPasswordForm" action="process_forgotpassword.php" method="POST">
