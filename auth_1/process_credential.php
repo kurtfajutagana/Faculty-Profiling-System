@@ -75,17 +75,25 @@ try {
 
                 // Create a PHPMailer instance with correct namespace
                 $mail = new \PHPMailer\PHPMailer\PHPMailer;
-                $mail->isSMTP();  // Set mailer to use SMTP
-                $mail->Host = 'smtp-relay.brevo.com';  // Brevo SMTP server
+                $smtpHost = getenv('SMTP_HOST') ?: 'smtp-relay.brevo.com';
+                $smtpPort = (int)(getenv('SMTP_PORT') ?: 587);
+                $smtpUser = getenv('SMTP_USER') ?: '8cc35a002@smtp-brevo.com';
+                $smtpPass = getenv('SMTP_PASS') ?: (getenv('SMTP_PASSWORD') ?: 'JSh1qV4zbR7DWaI0');
+                $smtpFrom = getenv('SMTP_FROM_EMAIL') ?: 'plp.no.reply1@gmail.com';
+                $smtpFromName = getenv('SMTP_FROM_NAME') ?: 'PLP Faculty Portal';
+                $smtpSecure = strtolower(getenv('SMTP_SECURE') ?: 'tls');
+
+                $mail->isSMTP();
+                $mail->Host = $smtpHost;
                 $mail->SMTPAuth = true;
-                $mail->Username = '8cc35a002@smtp-brevo.com';  // Your Brevo SMTP Username
-                $mail->Password = 'JSh1qV4zbR7DWaI0';  // Your Brevo SMTP Password
-                $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;  // Use TLS
-                $mail->Port = 587;  // TLS Port
+                $mail->Username = $smtpUser;
+                $mail->Password = $smtpPass;
+                $mail->SMTPSecure = ($smtpSecure === 'ssl') ? \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS : \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = $smtpPort;
 
                 // Set the email details
-                $mail->setFrom('plp.no.reply1@gmail.com', 'NO REPLY');
-                $mail->addAddress($facultyEmail);  // Add the faculty's email
+                $mail->setFrom($smtpFrom, $smtpFromName);
+                $mail->addAddress($facultyEmail);
 
                 $mail->Subject = 'Credential Rejection Notification';
                 $mail->Body    = "Dear Faculty,\n\nYour credential has been rejected due to the following reason:\n\n" . $reason . "\n\nPlease contact support for further assistance.";

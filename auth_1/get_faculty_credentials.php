@@ -43,9 +43,9 @@ $result = $stmt->get_result();
 
 $credentials = [];
 while ($row = $result->fetch_assoc()) {
-    // Convert path to properly reference the faculty/uploads directory
-    $relativePath = '../faculty-profiling-system/faculty/' . ltrim($row['file_path'], '/');
-    $row['file_path'] = $baseUrl . '/' . ltrim($relativePath, '/');
+    // Convert path to properly reference the auth_2/uploads directory
+    $relativePath = '../auth_2/' . ltrim($row['file_path'], '/');
+    $row['file_path'] = $relativePath;
     $credentials[] = $row;
 }
 

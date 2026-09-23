@@ -1,0 +1,38 @@
+# ========================================================
+# Render Blueprint Specification
+# Deploy with 1-Click on Render (https://render.com)
+# ========================================================
+
+services:
+  - type: web
+    name: faculty-profiling-system
+    runtime: docker
+    plan: free
+    healthCheckPath: /health.php
+    autoDeploy: true
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: finalproj
+      - key: SMTP_HOST
+        value: smtp-relay.brevo.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_SECURE
+        value: tls
+      - key: SMTP_FROM_EMAIL
+        value: plp.no.reply1@gmail.com
+      - key: SMTP_FROM_NAME
+        value: PLP Faculty Portal
+

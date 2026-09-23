@@ -47,17 +47,25 @@ function sendEmail($to, $subject, $htmlBody) {
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
     
     try {
+        $smtpHost = getenv('SMTP_HOST') ?: 'smtp-relay.brevo.com';
+        $smtpPort = (int)(getenv('SMTP_PORT') ?: 587);
+        $smtpUser = getenv('SMTP_USER') ?: '8cc35a002@smtp-brevo.com';
+        $smtpPass = getenv('SMTP_PASS') ?: (getenv('SMTP_PASSWORD') ?: 'JSh1qV4zbR7DWaI0');
+        $smtpFrom = getenv('SMTP_FROM_EMAIL') ?: 'plp.no.reply1@gmail.com';
+        $smtpFromName = getenv('SMTP_FROM_NAME') ?: 'PLP Faculty Portal';
+        $smtpSecure = strtolower(getenv('SMTP_SECURE') ?: 'tls');
+
         // SMTP Configuration
         $mail->isSMTP();
-        $mail->Host = 'smtp-relay.brevo.com';
+        $mail->Host = $smtpHost;
         $mail->SMTPAuth = true;
-        $mail->Username = '8cc35a002@smtp-brevo.com';
-        $mail->Password = 'JSh1qV4zbR7DWaI0';
-        $mail->SMTPSecure = \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Username = $smtpUser;
+        $mail->Password = $smtpPass;
+        $mail->SMTPSecure = ($smtpSecure === 'ssl') ? \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS : \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $smtpPort;
 
         // Email content
-        $mail->setFrom('plp.no.reply1@gmail.com', 'No-Reply');
+        $mail->setFrom($smtpFrom, $smtpFromName);
         $mail->addAddress($to);
         $mail->isHTML(true);
         $mail->Subject = $subject;

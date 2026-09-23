@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+.dockerignore
+.vscode
+.idea
+vendor
+*.md
+!README.md
+scratch
+

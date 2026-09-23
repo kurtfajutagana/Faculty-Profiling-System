@@ -296,7 +296,7 @@ $users = $stmt->get_result();
           <div id="faculty-id-error" class="custom-alert">
               There is no existing faculty with this Faculty ID. You need to add a faculty with the Faculty ID 
               <span id="faculty-id" style="font-weight: bold;"></span> first 
-              <a href="http://localhost/Faculty-Profiling-System/admin/college_management.php">here</a>.
+              <a href="college_management.php">here</a>.
           </div>
       </div>
   </div>
