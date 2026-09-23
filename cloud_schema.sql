@@ -219,10 +219,29 @@ INSERT INTO `faculty` (`faculty_id`, `college_id`, `full_name`, `email`, `employ
 ('23-20008', 3, 'Rebecca Fajardo', 'fajardorebecca@plpasig.edu.ph', 'Full-Time', 'MSEE', '09183456989', 'Active', '2025-05-08 20:31:51'),
 ('23-20009', 3, 'Catherine Sorbito', 'sorbitocatherine@plpasig.edu.ph', 'Full-Time', 'MSIT', '09171122334', 'Active', '2025-05-08 20:31:51'),
 ('23-20010', 3, 'Maricel D. Lopez', 'lopezmaricel@plpasig.edu.ph', 'Full-Time', 'DIT', '09123456789', 'Active', '2025-05-24 04:06:25'),
+-- College 2: College of Business and Accountancy (CBA)
+('23-10001', 2, 'Dr. Arthur V. Ramos', 'ramosarthur@plpasig.edu.ph', 'Full-Time', 'DBA', '09171234567', 'Active', '2025-05-24 05:00:00'),
+('23-10002', 2, 'Patricia Anne Reyes', 'reyespatricia@plpasig.edu.ph', 'Full-Time', 'MBA', '09181234568', 'Active', '2025-05-24 05:00:00'),
+('23-10003', 2, 'Ramon Bautista', 'bautistaramon@plpasig.edu.ph', 'Full-Time', 'CPA', '09191234569', 'Active', '2025-05-24 05:00:00'),
+('23-10004', 2, 'Leticia M. Gomez', 'gomezleticia@plpasig.edu.ph', 'Part-Time', 'MM', '09201234570', 'Active', '2025-05-24 05:00:00'),
+-- College 4: College of Education (COED)
+('23-40001', 4, 'Dr. Gloria Mendoza', 'mendozagloria@plpasig.edu.ph', 'Full-Time', 'PhD', '09211234571', 'Active', '2025-05-24 05:00:00'),
+('23-40002', 4, 'Maria Teresa Cruz', 'cruzmariateresa@plpasig.edu.ph', 'Full-Time', 'MAEd', '09221234572', 'Active', '2025-05-24 05:00:00'),
+('23-40003', 4, 'Roberto Garcia', 'garciaroberto@plpasig.edu.ph', 'Part-Time', 'MAT', '09231234573', 'Active', '2025-05-24 05:00:00'),
+('23-40004', 4, 'Ferdinand Torres', 'torresferdinand@plpasig.edu.ph', 'Full-Time', 'MAEd', '09241234574', 'Active', '2025-05-24 05:00:00'),
+-- College 5: College of Engineering (COE)
 ('23-30000', 5, 'Godofredo S. Zapanta Jr.', 'zapantagodofredo@plpasig.edu.ph', 'Full-Time', 'ENG', '09382528344', 'Active', '2025-05-20 06:31:22'),
 ('23-30001', 5, 'Alberto A. Habrero', 'habreroalberto@plpasig.edu.ph', 'Full-Time', 'ENG', '09637298381', 'Active', '2025-05-20 06:31:22'),
 ('23-30002', 5, 'Karen V. Arguelles', 'arguelleskaren@plpasig.edu.ph', 'Full-Time', 'ENG', '09382528344', 'Active', '2025-05-20 06:36:44'),
-('23-30003', 5, 'Jonathan V. Diosana', 'diosanajonathan@plpasig.edu.ph', 'Full-Time', 'DOC ENG', '09637298381', 'Active', '2025-05-20 06:36:44')
+('23-30003', 5, 'Jonathan V. Diosana', 'diosanajonathan@plpasig.edu.ph', 'Full-Time', 'DOC ENG', '09637298381', 'Active', '2025-05-20 06:36:44'),
+-- College 6: College of Hospitality Management (CHM)
+('23-60001', 6, 'Dr. Cynthia Fernandez', 'fernandezcynthia@plpasig.edu.ph', 'Full-Time', 'DPA', '09251234575', 'Active', '2025-05-24 05:00:00'),
+('23-60002', 6, 'Marcus Villanueva', 'villanuevamarcus@plpasig.edu.ph', 'Full-Time', 'MSHM', '09261234576', 'Active', '2025-05-24 05:00:00'),
+('23-60003', 6, 'Joanna Marie Lopez', 'lopezjoanna@plpasig.edu.ph', 'Part-Time', 'BSTM', '09271234577', 'Active', '2025-05-24 05:00:00'),
+-- College 7: College of Nursing (CON)
+('23-70001', 7, 'Dr. Kristine Joy Alcantara', 'alcantarakristine@plpasig.edu.ph', 'Full-Time', 'MAN', '09281234578', 'Active', '2025-05-24 05:00:00'),
+('23-70002', 7, 'Benedict Dela Rosa', 'delarosabenedict@plpasig.edu.ph', 'Full-Time', 'MSN', '09291234579', 'Active', '2025-05-24 05:00:00'),
+('23-70003', 7, 'Carmela Sophia Tan', 'tancarmela@plpasig.edu.ph', 'Part-Time', 'BSN', '09301234580', 'Active', '2025-05-24 05:00:00')
 ON DUPLICATE KEY UPDATE `full_name` = VALUES(`full_name`);
 
 -- --------------------------------------------------------
@@ -251,7 +270,16 @@ INSERT INTO `users` (`user_id`, `college_id`, `faculty_id`, `username`, `passwor
 (57, 5, '23-30003', '23-30003', '$2y$10$B5vYJvXsvCWy4uEH3B3lhOTPPiJa32zS/1mqgDYe9PyScCPpltCNS', 'Faculty', 0, '2025-05-20 07:13:50'),
 (60, 1, '23-00005', 'cas_head', '$2y$10$dZv/GFTugnUYUK5LkTG1EOSAbJYxzU0f4sVLV7WasJVY2OfMCyg2G', 'Head', 0, '2025-05-23 20:12:33'),
 (61, 3, '23-20000', 'ccs_head', '$2y$10$koRS9JxQJ8ZkjmT4Zhtt8e6jUYDupPaRDNkVOiERj1W/9xJAMgbty', 'Head', 0, '2025-05-23 20:13:01'),
-(62, 5, '23-30000', 'coe_head', '$2y$10$1Fb0Rfkuq3Q4WjpXXPX/D.ioDc3yZrFXs35.geYryaO.6xC1rtU4e', 'Head', 0, '2025-05-23 20:13:38')
+(62, 5, '23-30000', 'coe_head', '$2y$10$1Fb0Rfkuq3Q4WjpXXPX/D.ioDc3yZrFXs35.geYryaO.6xC1rtU4e', 'Head', 0, '2025-05-23 20:13:38'),
+(63, 2, '23-10001', 'cba_head', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Head', 0, '2025-05-24 05:00:00'),
+(64, 4, '23-40001', 'coed_head', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Head', 0, '2025-05-24 05:00:00'),
+(65, 6, '23-60001', 'chm_head', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Head', 0, '2025-05-24 05:00:00'),
+(66, 7, '23-70001', 'con_head', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Head', 0, '2025-05-24 05:00:00'),
+(67, 2, '23-10001', '23-10001', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Faculty', 0, '2025-05-24 05:00:00'),
+(68, 2, '23-10002', '23-10002', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Faculty', 0, '2025-05-24 05:00:00'),
+(69, 4, '23-40001', '23-40001', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Faculty', 0, '2025-05-24 05:00:00'),
+(70, 6, '23-60001', '23-60001', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Faculty', 0, '2025-05-24 05:00:00'),
+(71, 7, '23-70001', '23-70001', '$2y$10$oTKZFwOgnpIZH/Ty7CNS7eR5fM6wbwKje6b8q1IHj6bC8t1lZYe8i', 'Faculty', 0, '2025-05-24 05:00:00')
 ON DUPLICATE KEY UPDATE `username` = VALUES(`username`);
 
 -- --------------------------------------------------------

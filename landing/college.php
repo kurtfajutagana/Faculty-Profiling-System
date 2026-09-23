@@ -26,40 +26,119 @@ if (!$college) {
     $college_id = $college['college_id'];
 }
 
-// Fetch active faculty for this college
-$faculty_stmt = $conn->prepare("SELECT faculty_id, full_name, email, employment_type, specialization FROM faculty WHERE college_id = ? AND status = 'Active' ORDER BY full_name ASC");
-$faculty_stmt->bind_param("i", $college_id);
-$faculty_stmt->execute();
-$faculty_result = $faculty_stmt->get_result();
-
-$faculty_list = [];
-$full_time_count = 0;
-$part_time_count = 0;
-
-if ($faculty_result) {
-    while ($f = $faculty_result->fetch_assoc()) {
-        $faculty_list[] = $f;
-        if ($f['employment_type'] === 'Full-Time') {
-            $full_time_count++;
-        } elseif ($f['employment_type'] === 'Part-Time') {
-            $part_time_count++;
-        }
-    }
-}
-$total_faculty = count($faculty_list);
-
-// Descriptions for colleges
-$college_descriptions = [
-    1 => "The College of Arts and Science is dedicated to providing students with foundational and specialized knowledge in liberal arts, natural sciences, and social sciences.",
-    2 => "The College of Business and Accountancy develops ethical, innovative, and competent business leaders and accountants prepared for global competitive landscapes.",
-    3 => "The College of Computer Studies delivers cutting-edge curriculum in information technology, computer science, and software engineering to drive technological innovation.",
-    4 => "The College of Education prepares dedicated educators and academic leaders equipped with modern pedagogical methodologies and strong moral character.",
-    5 => "The College of Engineering fosters technical proficiency, research innovation, and problem-solving skills in various engineering disciplines.",
-    6 => "The College of Hospitality Management prepares students for dynamic careers in the global tourism, hotel, culinary, and hospitality management sectors.",
-    7 => "The College of Nursing provides world-class healthcare education, clinical training, and compassionate patient care practices."
+// College details mapping (Programs, Mission, and Focus Areas)
+$college_details = [
+    1 => [
+        'icon' => 'fa-flask',
+        'desc' => 'The College of Arts and Science is dedicated to providing students with foundational and specialized knowledge in liberal arts, natural sciences, languages, mathematics, and social sciences.',
+        'programs' => [
+            'Bachelor of Arts in Communication (BA Comm)',
+            'Bachelor of Science in Psychology (BS Psych)',
+            'Bachelor of Science in Mathematics (BS Math)',
+            'Bachelor of Science in Political Science (BS PolSci)'
+        ],
+        'core_competencies' => [
+            'Critical Thinking & Ethical Research',
+            'Scientific Inquiry & Quantitative Analysis',
+            'Advanced Multilingual & Intercultural Communication',
+            'Community Advocacy & Social Science Research'
+        ]
+    ],
+    2 => [
+        'icon' => 'fa-chart-line',
+        'desc' => 'The College of Business and Accountancy develops ethical, innovative, and competent business leaders, accountants, and entrepreneurs prepared for competitive global corporate environments.',
+        'programs' => [
+            'Bachelor of Science in Accountancy (BSA)',
+            'Bachelor of Science in Business Administration - Financial Management (BSBA-FM)',
+            'Bachelor of Science in Business Administration - Marketing Management (BSBA-MM)',
+            'Bachelor of Science in Entrepreneurship (BS Entrep)'
+        ],
+        'core_competencies' => [
+            'Financial Analysis & Auditing Standards',
+            'Strategic Corporate Management',
+            'Digital Marketing & Consumer Insights',
+            'Corporate Governance & Ethical Decision Making'
+        ]
+    ],
+    3 => [
+        'icon' => 'fa-laptop-code',
+        'desc' => 'The College of Computer Studies delivers industry-aligned curriculum in information technology, computer science, and software engineering to drive regional and national digital transformation.',
+        'programs' => [
+            'Bachelor of Science in Information Technology (BSIT)',
+            'Bachelor of Science in Computer Science (BSCS)',
+            'Associate in Computer Technology (ACT)'
+        ],
+        'core_competencies' => [
+            'Full-Stack Software Development & Cloud Computing',
+            'Cybersecurity, Network Administration & Infrastructure',
+            'Database Architecture & Big Data Analytics',
+            'Artificial Intelligence & Machine Learning Applications'
+        ]
+    ],
+    4 => [
+        'icon' => 'fa-chalkboard-teacher',
+        'desc' => 'The College of Education prepares dedicated, pedagogical experts and academic leaders equipped with innovative teaching methodologies, values education, and research capability.',
+        'programs' => [
+            'Bachelor of Elementary Education (BEEd)',
+            'Bachelor of Secondary Education - Major in English (BSEd-Eng)',
+            'Bachelor of Secondary Education - Major in Mathematics (BSEd-Math)',
+            'Bachelor of Secondary Education - Major in Science (BSEd-Sci)',
+            'Bachelor of Secondary Education - Major in Social Studies (BSEd-SocSci)'
+        ],
+        'core_competencies' => [
+            'Modern Instructional Design & Technology Integration',
+            'Educational Assessment & Curriculum Development',
+            'Child & Adolescent Learner Psychology',
+            'Action Research & Community Learning Programs'
+        ]
+    ],
+    5 => [
+        'icon' => 'fa-cogs',
+        'desc' => 'The College of Engineering fosters technical proficiency, engineering design, sustainable infrastructure research, and innovative problem-solving skills across various engineering disciplines.',
+        'programs' => [
+            'Bachelor of Science in Civil Engineering (BSCE)',
+            'Bachelor of Science in Electrical Engineering (BSEE)',
+            'Bachelor of Science in Industrial Engineering (BSIE)',
+            'Bachelor of Science in Electronics Engineering (BSECE)',
+            'Bachelor of Science in Computer Engineering (BSCpE)'
+        ],
+        'core_competencies' => [
+            'Structural Design & Geotechnical Engineering',
+            'Power Systems & Renewable Energy Technology',
+            'Industrial Process Optimization & Quality Engineering',
+            'Robotics, Embedded Systems & Automation'
+        ]
+    ],
+    6 => [
+        'icon' => 'fa-hotel',
+        'desc' => 'The College of Hospitality Management prepares students for dynamic management careers in global tourism, hotel operations, culinary arts, airline services, and event management.',
+        'programs' => [
+            'Bachelor of Science in Hospitality Management (BSHM)',
+            'Bachelor of Science in Tourism Management (BSTM)'
+        ],
+        'core_competencies' => [
+            'International Hospitality & Hotel Operations',
+            'Culinary Arts & Food Beverage Service Management',
+            'Sustainable Ecotourism & Destination Marketing',
+            'MICE (Meetings, Incentives, Conferences, Exhibitions) Planning'
+        ]
+    ],
+    7 => [
+        'icon' => 'fa-user-nurse',
+        'desc' => 'The College of Nursing provides world-class clinical nursing education, evidence-based healthcare practice, patient safety standards, and community healthcare services.',
+        'programs' => [
+            'Bachelor of Science in Nursing (BSN)'
+        ],
+        'core_competencies' => [
+            'Comprehensive Clinical Nursing & Patient Care',
+            'Critical Care & Emergency Healthcare Management',
+            'Community Health Promotion & Disease Prevention',
+            'Evidence-Based Nursing Research & Clinical Ethics'
+        ]
+    ]
 ];
 
-$college_desc = $college_descriptions[$college_id] ?? "Dedicated to academic excellence, research advancement, and community service.";
+$details = $college_details[$college_id] ?? $college_details[1];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,104 +150,121 @@ $college_desc = $college_descriptions[$college_id] ?? "Dedicated to academic exc
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .college-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
         }
         .college-card {
-            background: rgba(255, 255, 255, 0.96);
+            background: rgba(255, 255, 255, 0.98);
             border-radius: 12px;
-            padding: 35px;
+            padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             margin-bottom: 30px;
         }
         .college-header-title {
             color: #007c2c;
-            font-size: 2rem;
+            font-size: 2.1rem;
             margin-top: 0;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             border-bottom: 3px solid #007c2c;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
         .college-desc {
-            font-size: 1.05rem;
-            line-height: 1.6;
+            font-size: 1.1rem;
+            line-height: 1.7;
             color: #444;
-            margin-bottom: 25px;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
             margin-bottom: 30px;
         }
-        .stat-item {
-            background: #f4fbf5;
-            border: 1px solid #c8e6c9;
-            border-radius: 8px;
-            padding: 15px 20px;
-            text-align: center;
-        }
-        .stat-item h3 {
-            font-size: 1.8rem;
+        .section-title {
             color: #007c2c;
-            margin: 0 0 5px 0;
+            font-size: 1.35rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .stat-item p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
-            font-weight: bold;
+        .programs-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
         }
-        .faculty-table-container {
-            overflow-x: auto;
+        .programs-list li {
+            background: #f4fbf5;
+            border-left: 4px solid #007c2c;
+            padding: 12px 18px;
+            border-radius: 0 6px 6px 0;
+            font-weight: 600;
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .competencies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        .competency-item {
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .faculty-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #555;
             font-size: 0.95rem;
         }
-        .faculty-table th {
-            background-color: #007c2c;
+        .competency-item i {
+            color: #007c2c;
+        }
+        .portal-access-box {
+            background: linear-gradient(135deg, #007c2c 0%, #00501c 100%);
             color: white;
-            padding: 12px 16px;
-            text-align: left;
-            font-weight: 600;
+            padding: 25px 30px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
         }
-        .faculty-table td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #eee;
-            color: #333;
+        .portal-access-box h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
         }
-        .faculty-table tr:hover {
-            background-color: #f9f9f9;
+        .portal-access-box p {
+            margin: 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.5;
         }
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .portal-login-btn {
+            background: #ffffff;
+            color: #007c2c;
             font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.2s, background 0.2s;
         }
-        .badge-ft {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-        .badge-pt {
-            background-color: #fff3e0;
-            color: #ef6c00;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-            font-style: italic;
+        .portal-login-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
         }
         .back-nav {
             margin-bottom: 20px;
@@ -219,69 +315,45 @@ $college_desc = $college_descriptions[$college_id] ?? "Dedicated to academic exc
 
         <div class="college-card">
             <h1 class="college-header-title">
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fas <?= htmlspecialchars($details['icon']) ?>"></i>
                 <?= htmlspecialchars($college['college_name']) ?>
             </h1>
             <p class="college-desc">
-                <?= htmlspecialchars($college_desc) ?>
+                <?= htmlspecialchars($details['desc']) ?>
             </p>
 
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3><?= $total_faculty ?></h3>
-                    <p>TOTAL FACULTY</p>
-                </div>
-                <div class="stat-item">
-                    <h3><?= $full_time_count ?></h3>
-                    <p>FULL-TIME FACULTY</p>
-                </div>
-                <div class="stat-item">
-                    <h3><?= $part_time_count ?></h3>
-                    <p>PART-TIME FACULTY</p>
-                </div>
+            <h2 class="section-title">
+                <i class="fas fa-graduation-cap"></i> Academic Degree Programs
+            </h2>
+            <ul class="programs-list">
+                <?php foreach ($details['programs'] as $prog): ?>
+                    <li><i class="fas fa-check-circle"></i> <?= htmlspecialchars($prog) ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <h2 class="section-title">
+                <i class="fas fa-award"></i> Core Focus & Key Competencies
+            </h2>
+            <div class="competencies-grid">
+                <?php foreach ($details['core_competencies'] as $comp): ?>
+                    <div class="competency-item">
+                        <i class="fas fa-star"></i>
+                        <span><?= htmlspecialchars($comp) ?></span>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
-            <h2 style="color: #222; margin-top: 30px; margin-bottom: 15px; font-size: 1.3rem;">
-                <i class="fas fa-users" style="color: #007c2c;"></i> Active Faculty Members Roster
-            </h2>
-
-            <?php if (!empty($faculty_list)): ?>
-                <div class="faculty-table-container">
-                    <table class="faculty-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Faculty Name</th>
-                                <th>Specialization</th>
-                                <th>Employment Type</th>
-                                <th>Contact / Institutional Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($faculty_list as $index => $f): ?>
-                                <tr>
-                                    <td><?= $index + 1 ?></td>
-                                    <td><strong><?= htmlspecialchars($f['full_name']) ?></strong></td>
-                                    <td><?= htmlspecialchars($f['specialization'] ?: 'General') ?></td>
-                                    <td>
-                                        <span class="badge <?= ($f['employment_type'] === 'Full-Time') ? 'badge-ft' : 'badge-pt' ?>">
-                                            <?= htmlspecialchars($f['employment_type'] ?: 'Faculty') ?>
-                                        </span>
-                                    </td>
-                                    <td><?= htmlspecialchars($f['email']) ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+            <!-- Secure Portal Access -->
+            <div class="portal-access-box">
+                <div>
+                    <h3><i class="fas fa-shield-alt"></i> Faculty & Staff Information</h3>
+                    <p>In accordance with institutional data privacy policies, detailed faculty profiles, credentials, and teaching load records are accessible only to authorized personnel.</p>
                 </div>
-            <?php else: ?>
-                <div class="empty-state">
-                    <i class="fas fa-folder-open" style="font-size: 2.5rem; margin-bottom: 10px; color: #ccc;"></i>
-                    <p>No active faculty records listed for this college yet.</p>
-                </div>
-            <?php endif; ?>
+                <a href="../login/index.php" class="portal-login-btn">
+                    <i class="fas fa-lock"></i> Portal Login
+                </a>
+            </div>
         </div>
     </div>
 </body>
 </html>
-
