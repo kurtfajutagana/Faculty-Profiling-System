@@ -12,6 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     bar3.style.transform = 'rotate(0) translate(0)';
   }
 
+  // Ensure close button exists inside menu navigation-header
+  if (menu) {
+    const navHeader = menu.querySelector('.navigation-header');
+    if (navHeader && !navHeader.querySelector('.menu-close-btn')) {
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'menu-close-btn';
+      closeBtn.setAttribute('aria-label', 'Close Navigation Menu');
+      closeBtn.setAttribute('type', 'button');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMenu();
+      });
+      navHeader.prepend(closeBtn);
+    }
+  }
+
   // Create backdrop if menu exists
   if (menu && !document.querySelector('.menu-backdrop')) {
     const backdrop = document.createElement('div');
@@ -34,13 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Auto-close menu on link click on small screens
+  // Auto-close menu on link click on small screens only for page navigation links
   if (menu) {
     const navLinks = menu.querySelectorAll('nav a:not([id="reportsDropdown"])');
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        if (window.innerWidth <= 768 && menu.classList.contains('active')) {
-          toggleMenu();
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+          if (window.innerWidth <= 768 && menu.classList.contains('active')) {
+            setTimeout(() => {
+              toggleMenu();
+            }, 50);
+          }
         }
       });
     });
@@ -61,7 +83,7 @@ function toggleMenu() {
   const bar2 = document.getElementById('bar2');
   const bar3 = document.getElementById('bar3');
 
-  if (!menu || !body || !bar1 || !bar2 || !bar3) return;
+  if (!menu || !body) return;
 
   // Ensure backdrop exists
   let backdrop = document.querySelector('.menu-backdrop');
@@ -76,26 +98,26 @@ function toggleMenu() {
     });
   }
 
-  if (!bar1.style.transform) {
-    bar1.style.transform = 'rotate(0) translate(0)';
-    bar2.style.opacity = '1';
-    bar3.style.transform = 'rotate(0) translate(0)';
-  }
+  const isOpen = menu.classList.contains('active');
 
-  if (menu.classList.contains('active')) {
+  if (isOpen) {
     menu.classList.remove('active');
     body.classList.remove('menu-open');
     backdrop.classList.remove('active');
-    bar1.style.transform = 'rotate(0) translate(0)';
-    bar2.style.opacity = '1';
-    bar3.style.transform = 'rotate(0) translate(0)';
+    if (bar1 && bar2 && bar3) {
+      bar1.style.transform = 'rotate(0) translate(0)';
+      bar2.style.opacity = '1';
+      bar3.style.transform = 'rotate(0) translate(0)';
+    }
   } else {
     menu.classList.add('active');
     body.classList.add('menu-open');
     backdrop.classList.add('active');
-    bar1.style.transform = 'rotate(45deg) translate(5px, 5px)';
-    bar2.style.opacity = '0';
-    bar3.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    if (bar1 && bar2 && bar3) {
+      bar1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+      bar2.style.opacity = '0';
+      bar3.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    }
   }
 }
 

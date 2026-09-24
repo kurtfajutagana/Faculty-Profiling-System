@@ -146,14 +146,15 @@ if ($college_id) {
     <div class="logo-section">
       <img src="../images/logo.png" alt="Logo" />
       <div class="title">PAMANTASAN NG LUNGSOD NG PASIG</div>
-      <button class="hamburger" onclick="toggleMenu()">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle Navigation Menu">
         <div id="bar1" class="bar"></div>
         <div id="bar2" class="bar"></div>
         <div id="bar3" class="bar"></div>
       </button>
     </div>
+  </div>
     
-    <div class="navigation" id="menu">
+  <div class="navigation" id="menu">
       <div class="navigation-header">
           <h1>ADMINISTRATOR</h1>
         <h2>| PLP FACULTY PROFILING SYSTEM |</h2>
@@ -191,7 +192,6 @@ if ($college_id) {
         <a href="#" onclick="confirmLogout()"><img src="../images/logout.png" alt="Logout Icon" class="menu-icon">LOGOUT</a>
       </div>
     </div>
-  </div>
 
   <div class="admin-dashboard-container">
     <div class="admin-home-card">

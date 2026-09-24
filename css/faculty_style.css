@@ -106,8 +106,9 @@ nav {
   border: 1px solid rgb(39, 70, 39);
   box-shadow: 0px 0px 15px rgb(1, 71, 1), 
               0px 0px 10px rgb(1, 71, 1) inset;
-  z-index: 1001;
+  z-index: 1002;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .menu-backdrop {
@@ -126,6 +127,39 @@ nav {
 
 .menu-backdrop.active {
   opacity: 1;
+  pointer-events: auto;
+}
+
+.menu-close-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 28px;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1005;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.menu-close-btn:hover {
+  color: #4ade80;
+  transform: scale(1.15);
+}
+
+.navigation a,
+.navigation button {
+  position: relative;
+  z-index: 1003;
   pointer-events: auto;
 }
 
@@ -264,6 +298,11 @@ nav {
 .hamburger.open #bar3 {
   background-color: #fff;
   transform: rotate(-45deg) translate(8px, -6px);
+}
+
+body.menu-open .hamburger {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .content {
