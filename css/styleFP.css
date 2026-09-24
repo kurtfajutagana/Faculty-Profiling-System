@@ -1,133 +1,193 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  body, html {
-    height: 100%;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body, html {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.left {
+  flex: 2;
+  position: relative;
+  background-size: cover;
+  background-position: left;
+}
+
+.bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right {
+  flex: .8;
+  background-color: #007e33;
+  color: white;
+  padding: 40px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 636px;
+}
+
+.content-wrapper {
+  max-width: 350px;
+  width: 100%;
+}
+
+.logo-header {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+  max-width: 90%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.logo-header h2 {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+}
+
+.form-box h1 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.form-box p {
+  font-size: 14px;
+  margin-bottom: 25px;
+  color: #dcdcdc;
+}
+
+.form-box {
+  margin-top: 1px;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 15px;
+}
+
+button {
+  padding: 12px 28px;
+  background-color: white;
+  color: #006d3c;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+.back-link {
+  display: block;
+  margin-top: 15px;
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
   .container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .left {
-    flex: 2;
-    position: relative;
-    background-size: cover;
-    background-position: left;
-  }
-  
-  .bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .right {
-    flex: .8;
-    background-color: #007e33;
-    color: white;
-    padding: 40px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    display: flex;
     flex-direction: column;
-    position: relative;
-    max-width: 636px;
+    min-height: 100vh;
   }
 
-  .content-wrapper {
-    max-width: 350px;
+  .left {
+    height: 160px;
+    max-height: 160px;
+    flex: none;
     width: 100%;
   }
-  
-  
-  .logo-header {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-    right: 40px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-align: center;
+
+  .right {
+    max-width: 100%;
+    padding: 2.5rem 1.5rem;
+    flex: 1;
+    justify-content: center;
   }
 
   .logo-header {
-    max-width: 90%;
-    flex-wrap: wrap;
-    justify-content: center;
+    position: static;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    padding: 0;
   }
-  
 
   .logo-header h2 {
-    font-size: 17px;
-    font-weight: bold;
-  }
-  
-  .logo {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .form-box h1 {
-    font-size: 28px;
-    margin-bottom: 15px;
-  }
-  
-  .form-box p {
     font-size: 14px;
-    margin-bottom: 25px;
-    color: #dcdcdc;
   }
 
-  .form-box {
-    margin-top: 1px;
+  .logo {
+    width: 45px;
+    height: 45px;
   }
-  
-  label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    display: block;
+}
+
+@media (max-width: 500px) {
+  .left {
+    display: none;
   }
-  
-  input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    margin-bottom: 20px;
-    border-radius: 20px;
-    outline: none;
+
+  .right {
+    padding: 2rem 1.2rem;
   }
-  
+
+  .logo-header h2 {
+    font-size: 12.5px;
+  }
+
+  .form-box h1 {
+    font-size: 22px;
+  }
+
   button {
-    padding: 10px 20px;
-    background-color: white;
-    color: #006d3c;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
-    display: block;
-    margin: 0 auto;
+    width: 100%;
   }
-  
-  button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .back-link {
-    display: block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: white;
-    font-size: 14px;
-    text-align: center;
-  }
-  
+}

@@ -479,19 +479,16 @@ nav ul li.dropdown .dropdown-menu a:hover {
     width: 100%;
     max-height: 60vh;
     overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     background: #fff;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    scrollbar-width: none; /* Firefox */
-}
-
-/* Hide scrollbar for Chrome, Safari, Opera */
-.table-container::-webkit-scrollbar {
-    display: none;
 }
 
 .user-table {
     width: 100%;
+    min-width: 650px;
     border: 1px solid #ddd;
     border-radius: 10px;
     border-collapse: separate;
@@ -539,8 +536,14 @@ nav ul li.dropdown .dropdown-menu a:hover {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
+    .user-management-container {
+        padding: 1.25rem 0.85rem;
+        margin: 1rem auto;
+    }
+    
     .search-add-container {
         flex-direction: column;
+        gap: 10px;
     }
     
     .search-box {
@@ -551,17 +554,23 @@ nav ul li.dropdown .dropdown-menu a:hover {
     .add-user-btn {
         width: 100%;
         justify-content: center;
-    }
-    
-    .user-table {
-        display: block;
-        overflow-x: auto;
+        padding: 0.75rem;
     }
     
     .modal-content {
         width: 95%;
-        margin: 10% auto;
+        max-width: 480px;
+        margin: 20px auto;
         padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-management-title {
+        font-size: 1.35em;
+    }
+    .modal-content {
+        padding: 1.2rem 1rem;
     }
 }
 

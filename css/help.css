@@ -153,3 +153,20 @@
     z-index: 1000;
     display: none;
 }
+
+@media (max-width: 480px) {
+    .popout {
+        width: calc(100% - 30px);
+        right: 15px;
+        left: 15px;
+        bottom: 75px;
+    }
+
+    .content-popout {
+        width: calc(100% - 30px);
+        right: 15px;
+        left: 15px;
+        bottom: 75px;
+        max-height: 70vh;
+    }
+}

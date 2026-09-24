@@ -6,13 +6,15 @@
 }
 
 body, html {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -209,5 +211,105 @@ h1 {
     margin: 2px 0;
     display: flex;
     justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .left-side {
+    height: 160px;
+    max-height: 160px;
+    flex: none;
+    width: 100%;
+  }
+
+  .right-side {
+    min-width: unset;
+    width: 100%;
+    padding: 2.5rem 1.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .header {
+    position: static;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 360px;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0 0 10px 0;
+  }
+
+  .header::after {
+    display: none;
+  }
+
+  .header h2 {
+    font-size: 14px;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .logo {
+    width: 45px;
+    height: 45px;
+    margin-left: 0;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 5px;
+    margin-bottom: 25px;
+  }
+
+  .login-button {
+    width: 100%;
+    max-width: 240px;
+    text-align: center;
+  }
+
+  .cancel-button {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .left-side {
+    display: none;
+  }
+
+  .right-side {
+    padding: 2rem 1.2rem;
+  }
+
+  .header h2 {
+    font-size: 12.5px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    margin-bottom: 20px;
+  }
+
+  .input-field {
+    padding: 0.85rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .g-recaptcha {
+    transform: scale(0.88);
+    transform-origin: center;
+  }
 }
 

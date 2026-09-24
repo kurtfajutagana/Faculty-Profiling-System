@@ -285,6 +285,35 @@ $details = $college_details[$college_id] ?? $college_details[1];
         .back-nav a:hover {
             background: #00551e;
         }
+
+        @media (max-width: 768px) {
+            .college-container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+            .college-card {
+                padding: 20px 15px;
+            }
+            .college-header-title {
+                font-size: 1.4rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .programs-list {
+                grid-template-columns: 1fr;
+            }
+            .portal-access-box {
+                padding: 20px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .portal-login-btn {
+                width: 100%;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+        }
     </style>
 </head>
 <body>

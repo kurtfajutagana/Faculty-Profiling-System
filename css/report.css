@@ -14,6 +14,8 @@
     max-width: 2000px; 
     width: 100%;
     box-sizing: border-box;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .report-container table {
@@ -21,6 +23,7 @@
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
+    min-width: 650px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
@@ -81,6 +84,7 @@
 
 .report-table {
     width: 100%;
+    min-width: 650px;
     border: 1px solid #ddd;
     border-radius: 10px;
     border-collapse: separate;
@@ -342,6 +346,26 @@ nav ul li.dropdown .dropdown-menu a:hover {
 
 
 @media (max-width: 768px) {
+  .report-container {
+    padding: 14px 10px;
+    margin: 10px auto;
+  }
+
+  .report-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filter-box {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .filter-box select {
+    width: 100%;
+  }
+
   .log-tabs {
     flex-direction: column;
     align-items: stretch;
@@ -352,6 +376,15 @@ nav ul li.dropdown .dropdown-menu a:hover {
     width: 100%;
     min-width: 0;
     max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-header h3 {
+    font-size: 18px;
+  }
+  .report-container {
+    padding: 10px 8px;
   }
 }
 
@@ -468,6 +501,8 @@ body.report-page {
 #credential-logs {
     max-height: calc(100vh - 250px);
     overflow-y: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 20px;
     background: #fff;
     border-radius: 8px;
@@ -477,6 +512,7 @@ body.report-page {
 #credential-logs .report-table {
     margin-bottom: 0;
     width: 100%;
+    min-width: 650px;
 }
 
 /* Status badge styles */

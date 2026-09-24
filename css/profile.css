@@ -180,19 +180,78 @@
 @media (max-width: 768px) {
     .pds-container {
         padding: 15px;
-        margin: 10px;
+        margin: 10px auto;
+    }
+
+    .pds-header {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        position: static;
+    }
+
+    .pds-header img {
+        position: static;
+        left: unset;
+        margin: 0 0 12px 0;
+        height: 70px;
+    }
+
+    .pds-header h1 {
+        font-size: 20px;
+    }
+
+    .pds-header p {
+        font-size: 13px;
     }
 
     .pds-table {
         display: block;
         overflow-x: auto;
-        white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+        width: 100%;
     }
 
     .pds-table th,
     .pds-table td {
-        min-width: 120px;
+        min-width: 130px;
+    }
+
+    .edit-section-btn {
+        float: none;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .pds-container {
+        padding: 10px 8px;
+        margin: 5px;
+    }
+    .pds-section h2 {
+        font-size: 15px;
+        padding: 10px;
+    }
+    .pds-section h3 {
+        font-size: 14px;
     }
 }
 

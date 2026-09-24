@@ -10,7 +10,7 @@
     <style>
         .colleges-preview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 20px;
             margin-top: 30px;
             width: 100%;
